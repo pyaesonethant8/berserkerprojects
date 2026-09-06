@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team — NoBrainer</title>
+    <meta name="description" content="Meet the founders of NoBrainer — Pyae Sone Thant and Aung Thurein Htut, building under Berserker Projects.">
+    <link rel="icon" type="image/png" href="NoBrainerLogo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        pro: {
+                            bg: '#050505',
+                            card: '#0a0a0a',
+                            border: '#1f1f1f',
+                            text: '#ededed',
+                            muted: '#888888'
+                        }
+                    },
+                    animation: {
+                        'aurora-1': 'aurora1 22s ease-in-out infinite alternate',
+                        'aurora-2': 'aurora2 28s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        aurora1: {
+                            '0%': { transform: 'translate(0%, 0%) scale(1) rotate(0deg)', opacity: '0.6' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translate(12%, -12%) scale(1.25) rotate(18deg)', opacity: '0.6' }
+                        },
+                        aurora2: {
+                            '0%': { transform: 'translate(0%, 0%) scale(1) rotate(0deg)', opacity: '0.6' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translate(-12%, 12%) scale(1.15) rotate(-18deg)', opacity: '0.6' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-pro-bg text-pro-text font-sans min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden relative">
+
+    <!-- Ambient Owls -->
+    <svg class="ambient-owl owl-1 w-36 h-36 text-blue-200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M47.5 25C42.5 30 25 32 10 40C22.5 38 35 44 42.5 50L47.5 58L52.5 58L57.5 50C65 44 77.5 38 90 40C75 32 57.5 30 52.5 25C51.5 24 48.5 24 47.5 25Z" fill="currentColor"/>
+    </svg>
+    <svg class="ambient-owl owl-2 w-52 h-52 text-indigo-200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M47.5 25C42.5 30 25 32 10 40C22.5 38 35 44 42.5 50L47.5 58L52.5 58L57.5 50C65 44 77.5 38 90 40C75 32 57.5 30 52.5 25C51.5 24 48.5 24 47.5 25Z" fill="currentColor"/>
+    </svg>
+    <svg class="ambient-owl owl-3 w-24 h-24 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M47.5 25C42.5 30 25 32 10 40C22.5 38 35 44 42.5 50L47.5 58L52.5 58L57.5 50C65 44 77.5 38 90 40C75 32 57.5 30 52.5 25C51.5 24 48.5 24 47.5 25Z" fill="currentColor"/>
+    </svg>
+
+    <!-- ============================================================
+         MAIN CONTENT
+    ============================================================ -->
+    <main id="top" class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-24 flex-1 w-full">
+
+        <!-- Page Header -->
+        <div class="mb-16 reveal is-visible">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="section-label">// Team</span>
+                <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gradient leading-tight mb-4">The Minds Behind NoBrainer</h1>
+            <p class="text-pro-muted text-[15px] max-w-2xl leading-relaxed">
+                Two builders. One mission. Founded under Berserker Projects to raise the standard of IGCSE education in Myanmar.
+            </p>
+        </div>
+
+        <!-- ================= MEMBER 1: PHI2 ================= -->
+        <section id="phi2" class="mb-24 reveal">
+            <div class="glass-card rounded-3xl overflow-hidden">
+                <div class="grid lg:grid-cols-2">
+                    <!-- Silhouette Visual -->
+                    <div class="relative h-80 lg:h-auto overflow-hidden bg-gradient-to-br from-blue-950/40 via-transparent to-transparent flex items-center justify-center">
+                        <!-- Glow -->
+                        <div class="absolute w-64 h-64 rounded-full bg-blue-500/10 blur-[80px] silhouette-glow"></div>
+                        <!-- Rotating ring -->
+                        <div class="absolute w-56 h-56 rounded-full border border-blue-400/10 silhouette-ring"></div>
+                        <div class="absolute w-40 h-40 rounded-full border border-blue-400/5 silhouette-ring" style="animation-direction: reverse; animation-duration: 18s;"></div>
+                        <!-- Scan line -->
+                        <div class="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent scanline"></div>
+
+                        <!-- Silhouette figure -->
+                        <div class="silhouette-figure relative">
+                            <svg class="w-48 h-64 text-blue-300/30" viewBox="0 0 200 260" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Head -->
+                                <circle cx="100" cy="55" r="35"/>
+                                <!-- Body -->
+                                <path d="M100 90 C 60 90, 40 130, 40 180 L 40 260 L 160 260 L 160 180 C 160 130, 140 90, 100 90 Z"/>
+                                <!-- Arms -->
+                                <path d="M40 130 C 20 150, 15 180, 25 200 C 30 210, 40 205, 45 195 C 50 180, 50 160, 55 145"/>
+                                <path d="M160 130 C 180 150, 185 180, 175 200 C 170 210, 160 205, 155 195 C 150 180, 150 160, 145 145"/>
+                            </svg>
+                            <!-- Terminal overlay -->
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-40 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg p-2 font-mono text-[9px] text-blue-300/70">
+                                <div class="flex gap-1 mb-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500/60"></span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-yellow-500/60"></span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500/60"></span>
+                                </div>
+                                <span class="text-blue-400">$</span> whoami<br>
+                                <span class="text-white/80">phi2 // founder</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="p-8 lg:p-12 flex flex-col justify-center">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-mono bg-blue-500/10 border border-blue-500/20 text-blue-400">FOUNDER</span>
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-mono bg-white/5 border border-white/10 text-pro-muted">AGE 16</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-1">Pyae Sone Thant</h2>
+                        <p class="text-pro-muted font-mono text-sm mb-6">phi2 / Patrick Mill</p>
+
+                        <p class="text-pro-muted text-[15px] leading-relaxed mb-8">
+                            Founder of Berserker Projects & NoBrainer, leading developer. A 16-year-old student in Yangon, Myanmar, and a passionate tech enthusiast focused on infrastructure, systems, and building practical tools that solve real problems.
+                        </p>
+
+                        <div class="flex flex-col gap-3">
+                            <a href="https://t.me/diesel002_4" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 hover:bg-blue-500/20 font-medium text-sm transition-all duration-300">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                                @diesel002_4
+                            </a>
+                            <a href="https://berserkerprojects.xyz" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-pro-muted hover:text-white hover:bg-white/[0.08] font-medium text-sm transition-all duration-300">
+                                Berserker Projects <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MEMBER 2: CRAYON ================= -->
+        <section id="crayon" class="mb-24 reveal">
+            <div class="glass-card rounded-3xl overflow-hidden">
+                <div class="grid lg:grid-cols-2">
+                    <!-- Info (left on desktop) -->
+                    <div class="p-8 lg:p-12 flex flex-col justify-center lg:order-1 order-2">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">CO-FOUNDER</span>
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-mono bg-white/5 border border-white/10 text-pro-muted">AGE 14</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-1">Aung Thurein Htut</h2>
+                        <p class="text-pro-muted font-mono text-sm mb-6">Crayon / LightenCrayon</p>
+
+                        <p class="text-pro-muted text-[15px] leading-relaxed mb-8">
+                            Co-founder of Berserker Projects & NoBrainer, editor. A 14-year-old indie game developer crafting engaging content and creative direction — bringing a unique blend of game design thinking and editorial precision to the platform.
+                        </p>
+
+                        <div class="flex flex-col gap-3">
+                            <a href="https://t.me/lightencrayon" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 font-medium text-sm transition-all duration-300">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                                @lightencrayon
+                            </a>
+                            <a href="https://berserkerprojects.xyz" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-pro-muted hover:text-white hover:bg-white/[0.08] font-medium text-sm transition-all duration-300">
+                                Berserker Projects <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Silhouette Visual (right on desktop) -->
+                    <div class="relative h-80 lg:h-auto overflow-hidden bg-gradient-to-br from-emerald-950/40 via-transparent to-transparent flex items-center justify-center lg:order-2 order-1">
+                        <!-- Glow -->
+                        <div class="absolute w-64 h-64 rounded-full bg-emerald-500/10 blur-[80px] silhouette-glow" style="animation-delay: 1s;"></div>
+                        <!-- Rotating ring -->
+                        <div class="absolute w-56 h-56 rounded-full border border-emerald-400/10 silhouette-ring"></div>
+                        <div class="absolute w-40 h-40 rounded-full border border-emerald-400/5 silhouette-ring" style="animation-direction: reverse; animation-duration: 18s;"></div>
+                        <!-- Scan line -->
+                        <div class="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/20 to-transparent scanline" style="animation-delay: 1.5s;"></div>
+
+                        <!-- Silhouette figure -->
+                        <div class="silhouette-figure relative" style="animation-delay: 0.5s;">
+                            <svg class="w-48 h-64 text-emerald-300/30" viewBox="0 0 200 260" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Head -->
+                                <circle cx="100" cy="55" r="35"/>
+                                <!-- Body -->
+                                <path d="M100 90 C 60 90, 40 130, 40 180 L 40 260 L 160 260 L 160 180 C 160 130, 140 90, 100 90 Z"/>
+                                <!-- Arms -->
+                                <path d="M40 130 C 20 150, 15 180, 25 200 C 30 210, 40 205, 45 195 C 50 180, 50 160, 55 145"/>
+                                <path d="M160 130 C 180 150, 185 180, 175 200 C 170 210, 160 205, 155 195 C 150 180, 150 160, 145 145"/>
+                            </svg>
+                            <!-- Game controller overlay -->
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-40 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg p-2 font-mono text-[9px] text-emerald-300/70">
+                                <div class="flex gap-1 mb-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500/60"></span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-yellow-500/60"></span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500/60"></span>
+                                </div>
+                                <span class="text-emerald-400">$</span> whoami<br>
+                                <span class="text-white/80">crayon // co-founder</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= COLLABORATION CTA ================= -->
+        <section class="reveal">
+            <div class="glass-card rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+                <div class="relative">
+                    <div class="section-label mb-4">// Berserker Projects</div>
+                    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Built by students. For students.</h2>
+                    <p class="text-pro-muted text-[15px] max-w-xl mx-auto leading-relaxed mb-8">
+                        NoBrainer is an initiative under Berserker Projects — an independent technology lab founded in Yangon, Myanmar. We build practical tools that solve real problems.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="https://berserkerprojects.xyz" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-lg bg-white text-black hover:bg-gray-200 font-medium text-sm transition-all duration-300">
+                            Visit Berserker Projects
+                        </a>
+                        <a href="resources.html" class="px-6 py-3 rounded-lg bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] text-white font-medium text-sm transition-all duration-300">
+                            Browse Resources
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Components (header, footer, search overlay injected) -->
+    <script src="components.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

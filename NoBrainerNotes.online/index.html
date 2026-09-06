@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoBrainer — Premium IGCSE Knowledge Base</title>
+    <meta name="description" content="NoBrainer elevates the standard for Edexcel IGCSE students in Myanmar with pristine study notes, mark schemes, and curated academic materials.">
+    <link rel="icon" type="image/png" href="NoBrainerLogo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        pro: {
+                            bg: '#050505',
+                            card: '#0a0a0a',
+                            border: '#1f1f1f',
+                            text: '#ededed',
+                            muted: '#888888'
+                        }
+                    },
+                    animation: {
+                        'aurora-1': 'aurora1 22s ease-in-out infinite alternate',
+                        'aurora-2': 'aurora2 28s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        aurora1: {
+                            '0%': { transform: 'translate(0%, 0%) scale(1) rotate(0deg)', opacity: '0.6' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translate(12%, -12%) scale(1.25) rotate(18deg)', opacity: '0.6' }
+                        },
+                        aurora2: {
+                            '0%': { transform: 'translate(0%, 0%) scale(1) rotate(0deg)', opacity: '0.6' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translate(-12%, 12%) scale(1.15) rotate(-18deg)', opacity: '0.6' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-pro-bg text-pro-text font-sans min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden relative">
+
+    <!-- Ambient Owls -->
+    <svg class="ambient-owl owl-1 w-36 h-36 text-blue-200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M47.5 25C42.5 30 25 32 10 40C22.5 38 35 44 42.5 50L47.5 58L52.5 58L57.5 50C65 44 77.5 38 90 40C75 32 57.5 30 52.5 25C51.5 24 48.5 24 47.5 25Z" fill="currentColor"/>
+    </svg>
+    <svg class="ambient-owl owl-2 w-52 h-52 text-indigo-200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M47.5 25C42.5 30 25 32 10 40C22.5 38 35 44 42.5 50L47.5 58L52.5 58L57.5 50C65 44 77.5 38 90 40C75 32 57.5 30 52.5 25C51.5 24 48.5 24 47.5 25Z" fill="currentColor"/>
+    </svg>
+    <svg class="ambient-owl owl-3 w-24 h-24 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M47.5 25C42.5 30 25 32 10 40C22.5 38 35 44 42.5 50L47.5 58L52.5 58L57.5 50C65 44 77.5 38 90 40C75 32 57.5 30 52.5 25C51.5 24 48.5 24 47.5 25Z" fill="currentColor"/>
+    </svg>
+
+    <!-- ============================================================
+         MAIN CONTENT
+    ============================================================ -->
+    <main id="top" class="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-24 flex-1 w-full">
+
+        <!-- ================= HERO ================= -->
+        <section class="text-center max-w-3xl mx-auto space-y-8 animate-fade-in pt-8">
+            <!-- Premium Pill Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-pro-muted text-[11px] font-mono tracking-widest uppercase backdrop-blur-sm">
+                <span class="relative flex h-1.5 w-1.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
+                </span>
+                Edexcel IGCSE Hub
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-gradient leading-[1.1]">
+                Academic precision. <br>
+                Zero friction.
+            </h1>
+
+            <!-- Refined Paragraph -->
+            <p class="text-[15px] sm:text-base text-pro-muted leading-relaxed font-normal max-w-2xl mx-auto">
+                Founded in 2025 by <span class="text-gray-300 font-medium">Patrick Siegfried</span> and <span class="text-gray-300 font-medium">LightenCrayon</span> under <a href="https://berserkerprojects.xyz" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white border-b border-white/20 pb-0.5 transition-colors">Berserker Projects</a>, <strong class="text-white font-medium">NoBrainer</strong> elevates the standard for IGCSE (Edexcel) students in Myanmar by delivering pristine study notes, uncompromising mark schemes, and curated academic materials.
+            </p>
+
+            <!-- Pro CTA Buttons -->
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="resources.html" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-black hover:bg-gray-200 font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                    Access Materials
+                </a>
+                <a href="team.html" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] text-white font-medium text-sm transition-all duration-300">
+                    Meet the Team
+                </a>
+            </div>
+        </section>
+
+        <!-- ================= VISION / MANIFESTO ================= -->
+        <section id="vision" class="mt-32 reveal">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="section-label">// Vision</span>
+                <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-5">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-7 hover:border-white/15 transition-colors duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5">
+                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-semibold text-lg mb-2">Precision</h3>
+                    <p class="text-sm text-pro-muted leading-relaxed">Every note and mark scheme is curated against the official Edexcel specification — no noise, no filler, only what moves your grade.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-7 hover:border-white/15 transition-colors duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-5">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-semibold text-lg mb-2">Zero Friction</h3>
+                    <p class="text-sm text-pro-muted leading-relaxed">Instant access to a clean, organized database. No paywalls, no clutter, no wasted study time — just open and learn.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-7 hover:border-white/15 transition-colors duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5">
+                        <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-semibold text-lg mb-2">Myanmar-First</h3>
+                    <p class="text-sm text-pro-muted leading-relaxed">Built by students, for students. A Berserker Projects initiative raising the bar for IGCSE education across Myanmar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= QUICK ACCESS ================= -->
+        <section id="quick-access" class="mt-32 reveal">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="section-label">// Navigate</span>
+                <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+                <!-- Resources Card -->
+                <a href="resources.html" class="glass-card rounded-2xl p-8 hover:border-white/15 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-colors"></div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-semibold text-xl mb-2">Subject Resources</h3>
+                    <p class="text-sm text-pro-muted leading-relaxed mb-6">Browse the full IGCSE database — Physics, English B, Maths B, Further Pure Maths, ICT, and Computer Science.</p>
+                    <span class="inline-flex items-center gap-2 text-sm font-medium text-blue-400 group-hover:gap-3 transition-all">
+                        Open Database <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </span>
+                </a>
+
+                <!-- Team Card -->
+                <a href="team.html" class="glass-card rounded-2xl p-8 hover:border-white/15 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors"></div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-semibold text-xl mb-2">Meet the Team</h3>
+                    <p class="text-sm text-pro-muted leading-relaxed mb-6">The minds behind NoBrainer — Pyae Sone Thant and Aung Thurein Htut, building under Berserker Projects.</p>
+                    <span class="inline-flex items-center gap-2 text-sm font-medium text-emerald-400 group-hover:gap-3 transition-all">
+                        View Team <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Components (header, footer, search overlay injected) -->
+    <script src="components.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
