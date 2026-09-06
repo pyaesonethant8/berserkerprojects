@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Berserker Projects | Independent Technology Lab</title>
+    <meta name="description" content="Experimental technology. Practical systems. Built from curiosity. Independent lab founded in 2025 by Pyae Sone Thant (phi2) in Yangon, Myanmar.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --------------------------------------------------------
+           DESIGN TOKENS & RESET
+           -------------------------------------------------------- */
+        :root {
+            --bg-base: #030303;
+            --bg-surface: #0a0a0a;
+            --bg-surface-elevated: #111111;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-medium: rgba(255, 255, 255, 0.15);
+            --border-strong: rgba(255, 255, 255, 0.3);
+            
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --text-tertiary: #505055;
+            
+            --accent-metallic: #d2d2d7;
+            --accent-diesel: #ff3333; /* Used very sparingly as status indicators */
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+            
+            --section-padding: max(5rem, 10vh);
+            --container-width: 1400px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior: none;
+        }
+
+        body {
+            overflow-x: hidden;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* Subtle Grid Topology Background */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Noise overlay for texture */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        ::selection {
+            background: var(--text-primary);
+            color: var(--bg-base);
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .mono-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        /* --------------------------------------------------------
+           NAVIGATION
+           -------------------------------------------------------- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            mix-blend-mode: difference;
+            pointer-events: none; /* Let clicks pass through empty space */
+        }
+
+        .nav-brand {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            pointer-events: auto;
+        }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: auto;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        /* --------------------------------------------------------
+           HERO SECTION (Cinematic Parallax)
+           -------------------------------------------------------- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            /* Driven by JS scroll variables */
+            transform: translateY(calc(var(--scroll-y, 0) * 0.4px));
+            opacity: calc(1 - (var(--scroll-y, 0) / 800));
+        }
+
+        .hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-meta span:not(:last-child)::after {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 4px;
+            background: var(--border-strong);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 500;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2vw, 1.75rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 800px;
+            line-height: 1.4;
+        }
+
+        /* --------------------------------------------------------
+           ABOUT / WHAT IS IT (Sticky Progressive Reveal)
+           -------------------------------------------------------- */
+        #about-trigger {
+            height: 200vh; /* Creates scrolling space */
+            position: relative;
+        }
+
+        .about-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .about-text {
+            font-size: clamp(2rem, 4vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: var(--text-tertiary); /* Start dim */
+            max-width: 1200px;
+        }
+
+        /* JS applies inline gradient mask via --reveal-progress */
+        .about-text span {
+            background: linear-gradient(to right, var(--text-primary) 50%, var(--text-tertiary) 50%);
+            background-size: 200% 100%;
+            background-position: calc(100% - (var(--reveal-progress, 0) * 100%)) 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --------------------------------------------------------
+           PROJECT ECOSYSTEM (Systems, not cards)
+           -------------------------------------------------------- */
+        #projects {
+            padding: var(--section-padding) 0;
+            position: relative;
+            z-index: 10;
+            background: var(--bg-base);
+        }
+
+        .section-header {
+            margin-bottom: 8rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 500;
+            letter-spacing: -0.03em;
+        }
+
+        .system-wrapper {
+            margin-bottom: 10rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+        }
+
+        .system-wrapper.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .system-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+        }
+
+        .system-name {
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .system-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            font-weight: 300;
+        }
+
+        /* 1. DIESEL: Cloud Infra Visual Language */
+        .sys-diesel .system-interface {
+            border: 1px solid var(--border-medium);
+            background: var(--bg-surface);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1px;
+            background-color: var(--border-subtle);
+        }
+
+        .sys-diesel .module {
+            background: var(--bg-surface);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 250px;
+        }
+
+        .diesel-status {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #ff3333; /* Diesel specific accent */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .diesel-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #ff3333;
+            box-shadow: 0 0 10px rgba(255,51,51,0.5);
+        }
+
+        /* 2. NEUROCKS: AI Visual Language */
+        .sys-neurocks .system-interface {
+            height: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: radial-gradient(circle at center, var(--bg-surface-elevated) 0%, var(--bg-base) 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .neurocks-mesh {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.03) 0%, transparent 40%);
+            animation: breathe 10s infinite alternate ease-in-out;
+        }
+
+        .neurocks-data {
+            z-index: 2;
+            text-align: center;
+            font-family: var(--font-mono);
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* 3. NO BRAINER: Education Visual Language */
+        .sys-nobrainer .system-interface {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            border: 1px solid var(--border-medium);
+            background: var(--text-primary);
+            color: var(--bg-base);
+        }
+
+        .nobrainer-content {
+            padding: 4rem;
+            border-right: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .nobrainer-sidebar {
+            padding: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            background: #e5e5e5;
+        }
+
+        .sys-nobrainer .mono-meta {
+            color: var(--text-tertiary);
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: inherit;
+            margin-top: 2rem;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 0.25rem;
+            transition: opacity 0.2s;
+        }
+        
+        .btn-link:hover { opacity: 0.5; }
+
+        /* --------------------------------------------------------
+           PHILOSOPHY (Horizontal Scroll effect via CSS)
+           -------------------------------------------------------- */
+        #philosophy {
+            padding: var(--section-padding) 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .phil-item {
+            border-top: 2px solid var(--text-primary);
+            padding-top: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .phil-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .phil-item h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 1rem 0;
+        }
+
+        .phil-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* --------------------------------------------------------
+           FOUNDER & CONTACT
+           -------------------------------------------------------- */
+        #founder-contact {
+            padding: var(--section-padding) 0;
+            border-top: 1px solid var(--border-subtle);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .founder-box, .contact-box {
+            padding: 3rem;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle metallic sheen effect */
+        .founder-box::before, .contact-box::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.7s ease;
+        }
+
+        .founder-box:hover::before, .contact-box:hover::before {
+            left: 200%;
+        }
+
+        .founder-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            margin-top: 3rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            border-collapse: collapse;
+        }
+
+        .data-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-table td:nth-child(1) { color: var(--text-secondary); width: 30%; }
+        .data-table td:nth-child(2) { text-align: right; color: var(--text-primary); }
+
+        .contact-cta {
+            display: block;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            transition: color 0.3s;
+        }
+        
+        .contact-cta:hover { color: var(--text-secondary); }
+
+        /* --------------------------------------------------------
+           FOOTER
+           -------------------------------------------------------- */
+        footer {
+            padding: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* --------------------------------------------------------
+           RESPONSIVE DESIGN & ACCESSIBILITY
+           -------------------------------------------------------- */
+        @media (max-width: 1024px) {
+            .section-header, #founder-contact { grid-template-columns: 1fr; }
+            .philosophy-grid { grid-template-columns: repeat(2, 1fr); }
+            .sys-nobrainer .system-interface { grid-template-columns: 1fr; }
+            .nobrainer-sidebar { border-top: 1px solid rgba(0,0,0,0.1); }
+        }
+
+        @media (max-width: 600px) {
+            .philosophy-grid { grid-template-columns: 1fr; }
+            .hero-meta span { width: 100%; }
+            .hero-meta span::after { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            #hero { transform: none !important; opacity: 1 !important; }
+            .about-text span { background: none; -webkit-text-fill-color: var(--text-primary); }
+            .system-wrapper, .phil-item { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">BERSERKER // PHI2</div>
+        <div class="nav-status">
+            <div class="status-dot"></div>
+            <span class="mono-meta" style="color: white;">LAB: ONLINE</span>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="container">
+            <canvas id="hero-canvas" class="hero-canvas"></canvas>
+            <div class="hero-meta mono-meta">
+                <span>EST. 2025</span>
+                <span>PHI2</span>
+                <span>INDEPENDENT TECHNOLOGY LAB</span>
+                <span>YANGON, MYANMAR</span>
+            </div>
+            <h1 class="hero-title">Experimental technology.<br>Practical systems.<br>Built from curiosity.</h1>
+        </section>
+
+        <section id="about-trigger">
+            <div class="about-sticky container">
+                <h2 class="about-text">
+                    <span>Berserker Projects is a collection of experimental technology initiatives focused on building practical tools in cybersecurity, networking, robotics, and education. Each project is designed to solve real problems while exploring modern computing and infrastructure.</span>
+                </h2>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2 class="section-title">Operational Systems</h2>
+                    <p class="mono-meta">DATA-DRIVEN ARCHITECTURE // ACTIVE INITIATIVES</p>
+                </div>
+
+                <div class="system-wrapper sys-diesel fade-up">
+                    <div class="system-header">
+                        <div>
+                            <div class="mono-meta" style="margin-bottom: 1rem;">SYS.01 // INFRASTRUCTURE</div>
+                            <h3 class="system-name">DIESEL</h3>
+                        </div>
+                        <p class="system-description">Cloud infrastructure and custom hosting solutions engineered for resilience.</p>
+                    </div>
+                    <div class="system-interface">
+                        <div class="module">
+                            <span class="mono-meta">CLUSTER A</span>
+                            <div style="margin-top: auto;">
+                                <h4>Diesel-ULT</h4>
+                                <div class="diesel-status">NODE ACTIVE</div>
+                            </div>
+                        </div>
+                        <div class="module">
+                            <span class="mono-meta">CLUSTER B</span>
+                            <div style="margin-top: auto;">
+                                <h4>Diesel-01</h4>
+                                <div class="diesel-status">NODE ACTIVE</div>
+                            </div>
+                        </div>
+                        <div class="module" style="grid-column: span 2; display: flex; align-items: center; justify-content: center;">
+                            <a href="https://t.me/diesel002_4" target="_blank" rel="noopener noreferrer" class="btn-link">Request Allocation &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="system-wrapper sys-neurocks fade-up">
+                    <div class="system-header">
+                        <div>
+                            <div class="mono-meta" style="margin-bottom: 1rem;">SYS.02 // ARTIFICIAL INTELLIGENCE</div>
+                            <h3 class="system-name">NEUROCKS</h3>
+                        </div>
+                        <p class="system-description">Machine learning frameworks and intelligent systems for computational experimentation.</p>
+                    </div>
+                    <div class="system-interface">
+                        <div class="neurocks-mesh"></div>
+                        <div class="neurocks-data">
+                            <span class="mono-meta" style="color: white; opacity: 0.5;">ACTIVE MODEL</span>
+                            <h4 style="font-size: 2rem; margin: 0.5rem 0 1.5rem;">THURSDAY AI</h4>
+                            <a href="https://t.me/diesel002_4" target="_blank" rel="noopener noreferrer" class="btn-link" style="color: white; border-color: white;">Query Assistant &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="system-wrapper sys-nobrainer fade-up">
+                    <div class="system-header">
+                        <div>
+                            <div class="mono-meta" style="margin-bottom: 1rem;">SYS.03 // EDUCATION</div>
+                            <h3 class="system-name">NO BRAINER</h3>
+                        </div>
+                        <p class="system-description">Technical study-material platform translating complex engineering into functional knowledge.</p>
+                    </div>
+                    <div class="system-interface">
+                        <div class="nobrainer-content">
+                            <h4 style="font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em;">Technical Learning.</h4>
+                            <p style="font-size: 1.1rem; max-width: 400px; color: #444;">Structured documentation and study materials for computer science and networking.</p>
+                            <a href="https://www.nobrainernotes.online" target="_blank" rel="noopener noreferrer" class="btn-link" style="color: black; border-color: black;">nobrainernotes.online &nearr;</a>
+                        </div>
+                        <div class="nobrainer-sidebar">
+                            <div style="margin-bottom: 2rem;">
+                                <div class="mono-meta" style="color: #888;">INDEX</div>
+                                <ul style="list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <li>> Data Structures</li>
+                                    <li>> Packet Analysis</li>
+                                    <li>> Kernel Fundamentals</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="philosophy" class="container">
+            <div class="mono-meta">LABORATORY DIRECTIVES</div>
+            <div class="philosophy-grid fade-up">
+                <div class="phil-item fade-up">
+                    <span class="mono-meta">01</span>
+                    <h3>BUILD</h3>
+                    <p>Turn ideas into working systems. Theory is irrelevant without execution.</p>
+                </div>
+                <div class="phil-item fade-up" style="transition-delay: 0.1s;">
+                    <span class="mono-meta">02</span>
+                    <h3>EXPERIMENT</h3>
+                    <p>Break things. Learn. Rebuild. Vulnerability is found at the edges.</p>
+                </div>
+                <div class="phil-item fade-up" style="transition-delay: 0.2s;">
+                    <span class="mono-meta">03</span>
+                    <h3>PRACTICAL</h3>
+                    <p>Solve actual problems. No abstraction for the sake of abstraction.</p>
+                </div>
+                <div class="phil-item fade-up" style="transition-delay: 0.3s;">
+                    <span class="mono-meta">04</span>
+                    <h3>CURIOUS</h3>
+                    <p>Explore because it’s interesting. Unconstrained curiosity drives innovation.</p>
+                </div>
+                <div class="phil-item fade-up" style="transition-delay: 0.4s;">
+                    <span class="mono-meta">05</span>
+                    <h3>SYSTEMS</h3>
+                    <p>Understand what happens underneath. Respect the bare metal.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="founder-contact" class="container">
+            <div class="founder-box fade-up">
+                <div class="mono-meta" style="margin-bottom: 2rem;">ARCHITECT</div>
+                <h3 class="founder-title">Pyae Sone Thant</h3>
+                <p style="color: var(--text-secondary); font-size: 1.1rem;">(Patrick Mill) // phi2</p>
+                
+                <table class="data-table">
+                    <tr>
+                        <td>ROLE</td>
+                        <td>Student Builder / Founder</td>
+                    </tr>
+                    <tr>
+                        <td>LOCATION</td>
+                        <td>Yangon, Myanmar</td>
+                    </tr>
+                    <tr>
+                        <td>FOCUS</td>
+                        <td>Infrastructure & Sec</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="contact-box fade-up" style="transition-delay: 0.2s;">
+                <div class="mono-meta" style="margin-bottom: 2rem;">COMMUNICATIONS</div>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.5;">
+                    The lab is open for collaboration on experimental systems and practical infrastructure.
+                </p>
+                
+                <a href="https://t.me/diesel002_4" target="_blank" rel="noopener noreferrer" class="contact-cta">
+                    @diesel002_4 &nearr;
+                </a>
+                
+                <table class="data-table" style="margin-top: auto;">
+                    <tr>
+                        <td>PROTOCOL</td>
+                        <td>Telegram (Encrypted)</td>
+                    </tr>
+                    <tr>
+                        <td>STATUS</td>
+                        <td>Awaiting Input</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>© 2025 BERSERKER PROJECTS.</div>
+        <div>ALL SYSTEMS OPERATIONAL.</div>
+    </footer>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 1. Scroll Physics (Parallax & Progressive Reveal)
+        if (!prefersReducedMotion) {
+            const aboutTrigger = document.getElementById('about-trigger');
+            const aboutText = document.querySelector('.about-text span');
+            
+            let ticking = false;
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollY = window.scrollY;
+                        
+                        // Hero Parallax Mapping
+                        document.documentElement.style.setProperty('--scroll-y', scrollY);
+
+                        // About Section Reveal Logic
+                        const triggerRect = aboutTrigger.getBoundingClientRect();
+                        const triggerTop = triggerRect.top;
+                        const triggerHeight = triggerRect.height - window.innerHeight;
+                        
+                        if (triggerTop <= 0 && triggerTop >= -triggerHeight) {
+                            // Calculate progress from 0 to 1
+                            let progress = Math.abs(triggerTop) / triggerHeight;
+                            // Add easing for smoother reveal
+                            document.documentElement.style.setProperty('--reveal-progress', progress);
+                        } else if (triggerTop > 0) {
+                            document.documentElement.style.setProperty('--reveal-progress', 0);
+                        } else {
+                            document.documentElement.style.setProperty('--reveal-progress', 1);
+                        }
+
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        }
+
+        // 2. Intersection Observer (Fade-up Animations)
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-up').forEach(el => {
+                observer.observe(el);
+            });
+        } else {
+            // Fallback for reduced motion or older browsers
+            document.querySelectorAll('.fade-up').forEach(el => {
+                el.classList.add('in-view');
+            });
+        }
+
+        // 3. Hero Canvas (Subtle Computational Background)
+        if (!prefersReducedMotion) {
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let nodes = [];
+            const connectionDistance = 120;
+
+            function resizeCanvas() {
+                width = canvas.parentElement.clientWidth;
+                height = canvas.parentElement.clientHeight;
+                canvas.width = width * window.devicePixelRatio;
+                canvas.height = height * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                initNodes();
+            }
+
+            function initNodes() {
+                nodes = [];
+                const numNodes = Math.floor((width * height) / 15000); // Responsive density
+                for (let i = 0; i < numNodes; i++) {
+                    nodes.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        radius: Math.random() * 1.5 + 0.5
+                    });
+                }
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                ctx.lineWidth = 1;
+
+                nodes.forEach((node, i) => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    // Bounce off walls
+                    if (node.x < 0 || node.x > width) node.vx *= -1;
+                    if (node.y < 0 || node.y > height) node.vy *= -1;
+
+                    // Draw Node
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Connect Nodes
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const node2 = nodes[j];
+                        const dx = node.x - node2.x;
+                        const dy = node.y - node2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < connectionDistance) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - dist/connectionDistance)})`;
+                            ctx.moveTo(node.x, node.y);
+                            ctx.lineTo(node2.x, node2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+
+                requestAnimationFrame(animateCanvas);
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            animateCanvas();
+        }
+    </script>
+</body>
+</html>
