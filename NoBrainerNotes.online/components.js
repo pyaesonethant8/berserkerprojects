@@ -105,10 +105,78 @@
         aurora2.className = 'fixed bottom-[-20%] right-[-10%] w-[50vw] h-[50vh] bg-indigo-500/10 rounded-full mix-blend-screen filter blur-[120px] animate-aurora-2 pointer-events-none z-0';
         document.body.insertBefore(aurora2, document.body.firstChild);
 
+        // Animated "breathing" grid — individual cells that jump randomly.
+        // (Replaces the old static .bg-grid background pattern.)
         const grid = document.createElement('div');
-        grid.className = 'fixed inset-0 bg-grid pointer-events-none z-0';
+        grid.className = 'animated-grid';
         document.body.insertBefore(grid, document.body.firstChild);
+
+        // Spacing between grid cells (px)
+        const spacing = 44;
+        const cols = Math.ceil(window.innerWidth / spacing) + 1;
+        const rows = Math.ceil(window.innerHeight / spacing) + 1;
+
+        // Build cells in a DocumentFragment for performance
+        const frag = document.createDocumentFragment();
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const cell = document.createElement('div');
+                cell.className = 'ag-cell';
+                cell.style.left = (c * spacing) + 'px';
+                cell.style.top = (r * spacing) + 'px';
+
+                // Randomised timing so cells "jump" at staggered, organic moments
+                const duration = (3 + Math.random() * 5).toFixed(2);   // 3s – 8s
+                const delay = (Math.random() * 6).toFixed(2);          // 0s – 6s
+                cell.style.animationDuration = duration + 's';
+                cell.style.animationDelay = delay + 's';
+
+                // A few cells are slightly larger / brighter for depth
+                if (Math.random() < 0.12) {
+                    cell.style.width = '3px';
+                    cell.style.height = '3px';
+                    cell.style.background = 'rgba(147,197,253,0.5)';
+                    cell.style.boxShadow = '0 0 8px rgba(147,197,253,0.4)';
+                }
+
+                frag.appendChild(cell);
+            }
+        }
+        grid.appendChild(frag);
+
+        // Rebuild on resize so the grid always covers the viewport
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                const newCols = Math.ceil(window.innerWidth / spacing) + 1;
+                const newRows = Math.ceil(window.innerHeight / spacing) + 1;
+                if (newCols !== cols || newRows !== rows) {
+                    grid.innerHTML = '';
+                    const f2 = document.createDocumentFragment();
+                    for (let r = 0; r < newRows; r++) {
+                        for (let c = 0; c < newCols; c++) {
+                            const cell = document.createElement('div');
+                            cell.className = 'ag-cell';
+                            cell.style.left = (c * spacing) + 'px';
+                            cell.style.top = (r * spacing) + 'px';
+                            cell.style.animationDuration = (3 + Math.random() * 5).toFixed(2) + 's';
+                            cell.style.animationDelay = (Math.random() * 6).toFixed(2) + 's';
+                            if (Math.random() < 0.12) {
+                                cell.style.width = '3px';
+                                cell.style.height = '3px';
+                                cell.style.background = 'rgba(147,197,253,0.5)';
+                                cell.style.boxShadow = '0 0 8px rgba(147,197,253,0.4)';
+                            }
+                            f2.appendChild(cell);
+                        }
+                    }
+                    grid.appendChild(f2);
+                }
+            }, 200);
+        });
     }
+
 
     function injectPremiumElements() {
         // Cursor glow

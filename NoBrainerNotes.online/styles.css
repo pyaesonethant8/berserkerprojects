@@ -41,6 +41,42 @@
     -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 }
 
+/* ============================================================
+   ANIMATED GRID — "Breathing" cells that jump randomly
+   ============================================================ */
+.animated-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    /* Fade out toward the edges for a soft, cinematic vignette */
+    -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 78%);
+    mask-image: radial-gradient(circle at center, black 35%, transparent 78%);
+}
+.animated-grid .ag-cell {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+    will-change: transform, opacity;
+    animation: ag-jump 4s ease-in-out infinite;
+}
+/* Randomised per-cell timing is applied inline via JS (delay + duration). */
+@keyframes ag-jump {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.35;
+    }
+    50% {
+        transform: translateY(-14px) scale(1.6);
+        opacity: 0.9;
+    }
+}
+
+
 /* Text Gradient */
 .text-gradient {
     background: linear-gradient(to right, #fff, #a1a1aa);
@@ -869,5 +905,141 @@ h1, h2, h3 {
     border-color: rgba(59,130,246,0.3);
     color: #93c5fd;
 }
+
+/* ============================================================
+   RAPID ACCESS — titlebar toggle + info tooltip
+   ============================================================ */
+.rapid-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Toggle switch */
+.rapid-switch {
+    position: relative;
+    width: 30px;
+    height: 17px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.15);
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.rapid-switch .rapid-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rapid-switch.on {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    border-color: rgba(59,130,246,0.6);
+    box-shadow: 0 0 10px rgba(59,130,246,0.4);
+}
+.rapid-switch.on .rapid-knob {
+    transform: translateX(13px);
+}
+
+/* Label */
+.rapid-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #a1a1aa;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+/* Info "i" button */
+.rapid-info {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.rapid-info:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.25);
+}
+
+/* Tooltip */
+.rapid-tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 240px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(18,18,22,0.98);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 16px 40px -8px rgba(0,0,0,0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 60;
+    text-align: left;
+}
+.rapid-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 14px;
+    width: 10px;
+    height: 10px;
+    background: rgba(18,18,22,0.98);
+    border-left: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    transform: rotate(45deg);
+}
+.rapid-tooltip strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+}
+.rapid-tooltip span {
+    display: block;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #a1a1aa;
+}
+.rapid-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Hide the label text on very small screens to save space */
+@media (max-width: 480px) {
+    .rapid-label { display: none; }
+}
+
 
 
