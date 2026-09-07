@@ -453,6 +453,57 @@ function initPageTransitions() {
 }
 
 /* ==========================================================
+   OWL AI CHAT — Toggle Logic
+========================================================== */
+function initOwlChat() {
+    const trigger = document.getElementById('owl-trigger');
+    const drawer = document.getElementById('owl-drawer');
+    const backdrop = document.getElementById('owl-backdrop');
+    const closeBtn = document.getElementById('owl-close');
+    if (!trigger || !drawer || !backdrop) return;
+
+    function openOwl() {
+        drawer.classList.add('active');
+        backdrop.classList.add('active');
+        trigger.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeOwl() {
+        drawer.classList.remove('active');
+        backdrop.classList.remove('active');
+        trigger.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function toggleOwl() {
+        if (drawer.classList.contains('active')) {
+            closeOwl();
+        } else {
+            openOwl();
+        }
+    }
+
+    trigger.addEventListener('click', toggleOwl);
+    if (closeBtn) closeBtn.addEventListener('click', closeOwl);
+
+    // Close on backdrop click
+    backdrop.addEventListener('click', closeOwl);
+
+    // Close on ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('active')) {
+            closeOwl();
+        }
+    });
+
+    // Prevent page transition from triggering when clicking inside the drawer
+    drawer.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+}
+
+/* ==========================================================
    INIT
 ========================================================== */
 document.addEventListener('DOMContentLoaded', function () {
@@ -464,4 +515,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initBackToTop();
     initMagneticButtons();
     initPageTransitions();
+    initOwlChat();
 });
+

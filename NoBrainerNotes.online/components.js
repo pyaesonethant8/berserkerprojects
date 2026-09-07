@@ -10,7 +10,7 @@
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-2.5 group cursor-pointer">
                     <img src="NoBrainerLogo.png" alt="NoBrainer Logo" class="w-7 h-7 object-contain group-hover:opacity-80 transition-opacity">
-                    <span class="font-semibold text-sm tracking-tight text-white">NoBrainer</span>
+                    <span class="font-semibold text-sm tracking-tight text-white">NoBrainer (Beta) </span>
                 </a>
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                     <a href="index.html" class="text-pro-muted hover:text-white transition-colors">Home</a>
@@ -51,7 +51,7 @@
         footer.innerHTML = `
             <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <span>&copy; 2026 NoBrainerNotes.online. All rights reserved.</span>
+                    <span>&copy; 2026 main.nobrainernotes.online. All rights reserved.</span>
                     <span class="hidden sm:inline text-white/20">|</span>
                     <span class="hidden sm:inline-flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/70"></span>
@@ -134,11 +134,113 @@
         document.body.appendChild(transition);
     }
 
+    /* ============================================================
+       OWL AI CHAT — Trigger Button + Chat Drawer
+       ============================================================ */
+    function injectOwlChat() {
+        // ---- Trigger button (fixed top-right) ----
+        const trigger = document.createElement('button');
+        trigger.id = 'owl-trigger';
+        trigger.className = 'owl-trigger';
+        trigger.setAttribute('aria-label', 'Open Owl AI assistant');
+        trigger.innerHTML = `
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3C8.5 3 5.5 5.5 5.5 8.5C5.5 10.5 6.5 12 8 13V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V13C17.5 12 18.5 10.5 18.5 8.5C18.5 5.5 15.5 3 12 3Z" fill="currentColor"/>
+                <circle cx="9.5" cy="9" r="1.2" fill="#050505"/>
+                <circle cx="14.5" cy="9" r="1.2" fill="#050505"/>
+                <path d="M10.5 12.5C11 13 13 13 13.5 12.5" stroke="#050505" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <span class="owl-trigger-pulse"></span>
+        `;
+        document.body.appendChild(trigger);
+
+        // ---- Backdrop ----
+        const backdrop = document.createElement('div');
+        backdrop.id = 'owl-backdrop';
+        backdrop.className = 'owl-backdrop';
+        document.body.appendChild(backdrop);
+
+        // ---- Chat drawer ----
+        const drawer = document.createElement('div');
+        drawer.id = 'owl-drawer';
+        drawer.className = 'owl-drawer';
+        drawer.innerHTML = `
+            <!-- Header -->
+            <div class="owl-header">
+                <div class="flex items-center gap-3">
+                    <div class="owl-avatar">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3C8.5 3 5.5 5.5 5.5 8.5C5.5 10.5 6.5 12 8 13V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V13C17.5 12 18.5 10.5 18.5 8.5C18.5 5.5 15.5 3 12 3Z" fill="currentColor"/>
+                            <circle cx="9.5" cy="9" r="1.2" fill="#050505"/>
+                            <circle cx="14.5" cy="9" r="1.2" fill="#050505"/>
+                            <path d="M10.5 12.5C11 13 13 13 13.5 12.5" stroke="#050505" stroke-width="1" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-white font-semibold text-sm tracking-tight">Owl</h3>
+                            <span class="owl-badge">Coming Soon</span>
+                        </div>
+                        <p class="text-[11px] text-pro-muted truncate">Owl is an assistant for this no-brainer.</p>
+                    </div>
+                    <button id="owl-close" class="owl-close-btn" aria-label="Close chat">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="owl-messages">
+                <!-- Assistant greeting -->
+                <div class="owl-msg owl-msg-assistant">
+                    <div class="owl-msg-avatar">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3C8.5 3 5.5 5.5 5.5 8.5C5.5 10.5 6.5 12 8 13V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V13C17.5 12 18.5 10.5 18.5 8.5C18.5 5.5 15.5 3 12 3Z" fill="currentColor"/>
+                            <circle cx="9.5" cy="9" r="1.2" fill="#050505"/>
+                            <circle cx="14.5" cy="9" r="1.2" fill="#050505"/>
+                        </svg>
+                    </div>
+                    <div class="owl-bubble">
+                        <p>Hi! I'm <strong>Owl</strong> 🦉 — your study assistant for NoBrainer.</p>
+                        <p class="mt-1.5">I'll soon help you find notes, mark schemes, and past papers across all subjects.</p>
+                    </div>
+                </div>
+
+                <!-- Assistant coming soon note -->
+                <div class="owl-msg owl-msg-assistant">
+                    <div class="owl-msg-avatar">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3C8.5 3 5.5 5.5 5.5 8.5C5.5 10.5 6.5 12 8 13V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V13C17.5 12 18.5 10.5 18.5 8.5C18.5 5.5 15.5 3 12 3Z" fill="currentColor"/>
+                            <circle cx="9.5" cy="9" r="1.2" fill="#050505"/>
+                            <circle cx="14.5" cy="9" r="1.2" fill="#050505"/>
+                        </svg>
+                    </div>
+                    <div class="owl-bubble">
+                        <p>I'm currently in development and will be available soon. Stay tuned! ✨</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input area -->
+            <div class="owl-input-area">
+                <div class="owl-input-row">
+                    <input type="text" placeholder="Ask Owl anything..." disabled>
+                    <button class="owl-send-btn" disabled aria-label="Send message">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </button>
+                </div>
+                <p class="owl-sub-brand">A sub-project of <span class="text-gray-400">Neurocks</span> by <span class="text-gray-400">Berserker Projects</span></p>
+            </div>
+        `;
+        document.body.appendChild(drawer);
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         injectAmbient();
         injectHeader();
         injectFooter();
         injectSearchOverlay();
         injectPremiumElements();
+        injectOwlChat();
     });
 })();
