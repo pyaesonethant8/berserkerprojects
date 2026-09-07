@@ -312,10 +312,156 @@ function initReveal() {
 }
 
 /* ==========================================================
+   PREMIUM POLISH — Cursor Glow
+========================================================== */
+function initCursorGlow() {
+    const glow = document.querySelector('.cursor-glow');
+    if (!glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    let visible = false;
+    let rafId = null;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function animate() {
+        currentX = lerp(currentX, mouseX, 0.08);
+        currentY = lerp(currentY, mouseY, 0.08);
+        glow.style.left = currentX + 'px';
+        glow.style.top = currentY + 'px';
+        rafId = requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousemove', function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!visible) {
+            visible = true;
+            glow.classList.add('visible');
+            animate();
+        }
+    });
+
+    document.addEventListener('mouseleave', function () {
+        visible = false;
+        glow.classList.remove('visible');
+        if (rafId) cancelAnimationFrame(rafId);
+    });
+
+    // Hide on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) {
+        glow.style.display = 'none';
+    }
+}
+
+/* ==========================================================
+   PREMIUM POLISH — Scroll Progress Bar
+========================================================== */
+function initScrollProgress() {
+    const bar = document.querySelector('.scroll-progress');
+    if (!bar) return;
+
+    function update() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = progress + '%';
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+}
+
+/* ==========================================================
+   PREMIUM POLISH — Back to Top Button
+========================================================== */
+function initBackToTop() {
+    const btn = document.querySelector('.back-to-top');
+    if (!btn) return;
+
+    function toggle() {
+        if (window.scrollY > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    }
+
+    btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+}
+
+/* ==========================================================
+   PREMIUM POLISH — Magnetic Buttons
+========================================================== */
+function initMagneticButtons() {
+    const selectors = '.glass-card, .file-tile, .btn-primary, a[href].text-white, .back-to-top';
+    const elements = document.querySelectorAll(selectors);
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    elements.forEach(function (el) {
+        el.classList.add('magnetic-btn');
+        el.addEventListener('mousemove', function (e) {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            el.style.transform = 'translate(' + x * 0.08 + 'px, ' + y * 0.08 + 'px)';
+        });
+        el.addEventListener('mouseleave', function () {
+            el.style.transform = '';
+        });
+    });
+}
+
+/* ==========================================================
+   PREMIUM POLISH — Page Transitions
+========================================================== */
+function initPageTransitions() {
+    const overlay = document.querySelector('.page-transition');
+    if (!overlay) return;
+
+    // Intercept internal link clicks
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href) return;
+        // Only handle internal .html links (including query params like resources.html?subject=physics)
+        if (!href.includes('.html')) return;
+        if (href.startsWith('http') || href.startsWith('#')) return;
+        if (link.target === '_blank') return;
+
+        e.preventDefault();
+        overlay.classList.add('active');
+        setTimeout(function () {
+            window.location.href = href;
+        }, 200);
+    });
+
+    // Fade in on page load
+    window.addEventListener('pageshow', function () {
+        overlay.classList.remove('active');
+    });
+}
+
+/* ==========================================================
    INIT
 ========================================================== */
 document.addEventListener('DOMContentLoaded', function () {
     initSearch();
     initMobileMenu();
     initReveal();
+    initCursorGlow();
+    initScrollProgress();
+    initBackToTop();
+    initMagneticButtons();
+    initPageTransitions();
 });

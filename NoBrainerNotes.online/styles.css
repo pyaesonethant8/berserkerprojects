@@ -146,6 +146,147 @@
 }
 
 /* ============================================================
+   PREMIUM POLISH — Cursor Glow, Scroll Progress, etc.
+   ============================================================ */
+
+/* Custom Cursor Glow */
+.cursor-glow {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 60%);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    mix-blend-mode: screen;
+}
+.cursor-glow.visible { opacity: 1; }
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    z-index: 80;
+    background: linear-gradient(to right, #3b82f6, #6366f1, #8b5cf6);
+    box-shadow: 0 0 10px rgba(59,130,246,0.4);
+    pointer-events: none;
+    transition: width 0.1s linear;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 50;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ededed;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.back-to-top:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+}
+
+/* Page Transition Overlay */
+.page-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: #050505;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.page-transition.active { opacity: 1; }
+
+/* Magnetic Button */
+.magnetic-btn {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+/* Focus Visible States for Accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid rgba(59,130,246,0.6);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Card Hover Lift */
+.glass-card {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -8px rgba(0,0,0,0.4);
+}
+
+/* Fluid Typography */
+h1, h2, h3 {
+    text-wrap: balance;
+}
+
+/* ============================================================
+   HERO LOGO ANIMATIONS
+   ============================================================ */
+@keyframes logo-ring-spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes logo-float {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-6px); }
+}
+@keyframes logo-glow-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.15); }
+}
+
+.logo-ring {
+    background: conic-gradient(from 0deg, transparent 0%, rgba(59,130,246,0.6) 25%, transparent 50%, rgba(99,102,241,0.6) 75%, transparent 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 1px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 1px));
+    animation: logo-ring-spin 4s linear infinite;
+    filter: drop-shadow(0 0 6px rgba(59,130,246,0.4));
+}
+
+.logo-glow {
+    animation: logo-glow-pulse 3s ease-in-out infinite;
+}
+
+.logo-float {
+    animation: logo-float 4s ease-in-out infinite;
+}
+
+/* ============================================================
    SEARCH OVERLAY
    ============================================================ */
 #search-overlay {

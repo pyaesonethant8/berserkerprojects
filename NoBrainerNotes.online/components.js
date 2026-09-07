@@ -19,6 +19,7 @@
                     <button id="search-open" class="text-pro-muted hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         Search
+                        <kbd class="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.03] text-[10px] font-mono text-pro-muted">&#8984;K</kbd>
                     </button>
                     <a href="resources.html" class="text-white hover:text-blue-400 transition-colors flex items-center gap-1.5">
                         Open Database <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -49,10 +50,20 @@
         footer.className = 'relative z-10 border-t border-white/5 bg-transparent py-8 text-[13px] text-pro-muted';
         footer.innerHTML = `
             <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>&copy; 2026 NoBrainerNotes.online. All rights reserved.</div>
-                <div class="flex items-center gap-1.5">
+                <div class="flex items-center gap-3">
+                    <span>&copy; 2026 NoBrainerNotes.online. All rights reserved.</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
+                    <span class="hidden sm:inline-flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/70"></span>
+                        Updated Sep 2026
+                    </span>
+                </div>
+                <div class="flex items-center gap-2">
                     <span>Infrastructure by</span>
-                    <a href="https://berserkerprojects.xyz" target="_blank" rel="noopener noreferrer" class="text-gray-300 font-medium hover:text-white transition-colors">Berserker Projects</a>
+                    <a href="https://berserkerprojects.xyz" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-gray-300 font-medium hover:text-white transition-colors group">
+                        <img src="Berserker%20Projects%20Logo.jpg" alt="Berserker Projects" class="w-4 h-4 object-contain opacity-80 group-hover:opacity-100 transition-opacity" style="filter: grayscale(1) brightness(1.6) contrast(0.8); mix-blend-mode: screen;">
+                        Berserker Projects
+                    </a>
                 </div>
             </div>
         `;
@@ -99,10 +110,35 @@
         document.body.insertBefore(grid, document.body.firstChild);
     }
 
+    function injectPremiumElements() {
+        // Cursor glow
+        const glow = document.createElement('div');
+        glow.className = 'cursor-glow';
+        document.body.appendChild(glow);
+
+        // Scroll progress bar
+        const progress = document.createElement('div');
+        progress.className = 'scroll-progress';
+        document.body.appendChild(progress);
+
+        // Back to top button
+        const backTop = document.createElement('button');
+        backTop.className = 'back-to-top';
+        backTop.setAttribute('aria-label', 'Back to top');
+        backTop.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>';
+        document.body.appendChild(backTop);
+
+        // Page transition overlay
+        const transition = document.createElement('div');
+        transition.className = 'page-transition';
+        document.body.appendChild(transition);
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         injectAmbient();
         injectHeader();
         injectFooter();
         injectSearchOverlay();
+        injectPremiumElements();
     });
 })();
